@@ -1,0 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+    PipeTransform,
+    Injectable,
+    ArgumentMetadata,
+    BadRequestException,
+} from '@nestjs/common'
+import { isValidObjectId } from 'mongoose'
+
+@Injectable()
+export class ParseMongoIdPipe implements PipeTransform {
+    transform(value: string, metadata: ArgumentMetadata) {
+        if (!isValidObjectId(value)) {
+            throw new BadRequestException(
+                `${value} is not a valid Mongo ObjectId`
+            )
+        }
+        return value
+    }
+}
