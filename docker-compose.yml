@@ -1,6 +1,8 @@
 version: '3'
 services:
   app:
+    container_name: backend_pucetec_api
+    restart: on-failure
     ports:
       - 9108:9108
     build:
@@ -8,4 +10,3 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    restart: on-failure
