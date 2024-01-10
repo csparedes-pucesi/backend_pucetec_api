@@ -41,29 +41,41 @@ export class ProductsService {
     }
 
     findOne(id: string) {
-        const product = this.productModel.findById(id)
-        if (!product) {
-            throw new BadRequestException('Product not found')
+        try {
+            const product = this.productModel.findById(id)
+            if (!product) {
+                throw new BadRequestException('Product not found')
+            }
+            return product
+        } catch (error) {
+            throw new BadRequestException(error.message)
         }
-        return product
     }
 
     async update(id: string, updateProductDto: UpdateProductDto) {
-        const product = this.productModel.findByIdAndUpdate(
-            id,
-            updateProductDto
-        )
-        if (!product) {
-            throw new BadRequestException('Product not found')
+        try {
+            const product = await this.productModel.findByIdAndUpdate(
+                id,
+                updateProductDto
+            )
+            if (!product) {
+                throw new BadRequestException('Product not found')
+            }
+            return await this.productModel.findById(id)
+        } catch (error) {
+            throw new BadRequestException(error.message)
         }
-        return await this.productModel.findById(id)
     }
 
     remove(id: string) {
-        const product = this.productModel.findByIdAndDelete(id)
-        if (!product) {
-            throw new BadRequestException('Product not found')
+        try {
+            const product = this.productModel.findByIdAndDelete(id)
+            if (!product) {
+                throw new BadRequestException('Product not found')
+            }
+            return product
+        } catch (error) {
+            throw new BadRequestException(error.message)
         }
-        return product
     }
 }
