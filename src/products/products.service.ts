@@ -48,7 +48,7 @@ export class ProductsService {
         return product
     }
 
-    update(id: string, updateProductDto: UpdateProductDto) {
+    async update(id: string, updateProductDto: UpdateProductDto) {
         const product = this.productModel.findByIdAndUpdate(
             id,
             updateProductDto
@@ -56,7 +56,7 @@ export class ProductsService {
         if (!product) {
             throw new BadRequestException('Product not found')
         }
-        return
+        return await this.productModel.findById(id)
     }
 
     remove(id: string) {

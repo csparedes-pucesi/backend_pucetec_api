@@ -23,7 +23,7 @@ export class AuthService {
             const user = await this.usersService.findByEmail(loginDto.email)
             const checkPassword = compareSync(loginDto.password, user.password)
             if (!checkPassword) {
-                throw new Error('Wrong password')
+                throw new Error('Contraseña Incorrecta')
             }
             return {
                 user,
